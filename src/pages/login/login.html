@@ -5,26 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
-    <div class="flex-container">
-        <div class="login-card">
-          <div class="card-image">
-            <div class="user-image">
-              <img src="images/login-image.png" alt="">
-            </div>
-          </div>
-          <div class="login-feilds">
-            <div class="input-box">
-              <i class="fa fa-user"></i>
-              <input type="text" name="user" placeholder="User Name">
-            </div>
-            <div class="input-box">
-              <i class="fa fa-lock"></i>
-              <input type="password" name="password" placeholder="Password">
-            </div>
-            <div class="input-box">
-              <button>Sign In</button>
-            </div>			
-          </div>
-        </div>
-      </div>
+  <div class=form>
+    <form (ngSubmit)="doLogin()">
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Username</ion-label>
+                <ion-input type="text" [(ngModel)]=login.username name=username></ion-input>
+              </ion-item>
+            
+              <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input type="password" [(ngModel)]=login.password name=password></ion-input>
+              </ion-item>
+            
+              
+            </ion-list>
+            <button ion-button type="submit" full>Login</button>
+    </form>
+  </div>
 </ion-content>
