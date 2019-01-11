@@ -13,6 +13,9 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { SplashPage } from '../pages/splash/splash';
 import {LoginPage} from '../pages/login/login';
+import { WebapiProvider } from '../providers/webapi/webapi';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import {LoginPage} from '../pages/login/login';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp), 
     IonicStorageModule.forRoot({
       name: 'timesheet',
@@ -43,7 +47,8 @@ import {LoginPage} from '../pages/login/login';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    WebapiProvider
   ]
 })
 export class AppModule {}

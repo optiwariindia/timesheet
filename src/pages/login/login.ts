@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { WebapiProvider } from '../../providers/webapi/webapi';
+import { Storage } from '@ionic/storage';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the LoginPage page.
  *
@@ -14,10 +16,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  login={username:"",
-    password:""
+  login={user:"",
+    passwd:"",
+    module:"login"
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public api:WebapiProvider,public store:Storage) {
 
   }
 
@@ -26,5 +29,14 @@ export class LoginPage {
   }
   doLogin(){
     console.log(this.login);
+    var resp=this.api.getData(this.login);
+    resp.subscribe(r=>{
+      var resp=JSON.parse(JSON.stringify(r));
+      if(resp.auth){
+        this.store.set("userinfo",JSON.stringify(resp)).then(e=>{
+          this.navCtrl.setRoot(HomePage);
+        })
+      }
+    });
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "timesheet",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "iVAiD Marketing Private Limited",
+  "homepage": "http://www.ivaid.org/",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
