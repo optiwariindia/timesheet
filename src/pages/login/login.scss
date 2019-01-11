@@ -1,3 +1,90 @@
 page-login {
+  .form {
+    display: flex;
+    height: 100vh;
+
+    form {
+      margin: auto;
+      width: 40%;
+      box-shadow: 0px 0px 30px #ccc;
+      padding: 80px 10px 50px;
+      position: relative;
+    }
+
+    ion-list {
+      ion-item {
+        width: 60%;
+        margin: auto;
+        padding: 0;
+      }
+    }
+  }
+
+  .card-image {
+    position: absolute;
+    top: -20%;
+    left: 0;
+    right: 0;
+  }
+
+  .user-image {
+    width: 150px;
+    margin: auto;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .submit-button {
+    text-align: center;
+
+    button {
+      width: 33%;
+      height: 5rem;
+    }
+  }
+
+  ion-list.list.list-md {
+    text-align: center;
+    margin-top: 50px;
+
+    span {
+      display: block;
+    }
+  }
+
+  .error {
+    color: #f00;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .m-t-b-30 {
+    margin: 30px 0;
+  }
+
+  /*========================================================================*/
+  @media screen and (max-width: 991px) {
+    .form form {
+      width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .form form {
+      width: 95%;
+      box-shadow: none;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .form ion-list ion-item {
+      width: 100%;
+    }
+  }
 
 }

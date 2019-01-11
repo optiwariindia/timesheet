@@ -17,6 +17,7 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private store:Storage) {
     platform.ready().then(() => {
+      //this.store.clear();
       this.store.get("userinfo").then(resp=>{
         if(resp===null){
           this.rootPage=LoginPage;

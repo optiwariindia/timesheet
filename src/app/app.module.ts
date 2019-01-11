@@ -15,6 +15,8 @@ import { SplashPage } from '../pages/splash/splash';
 import {LoginPage} from '../pages/login/login';
 import { WebapiProvider } from '../providers/webapi/webapi';
 import { HttpClientModule } from '@angular/common/http';
+import { CompHeaderComponent } from '../components/comp-header/comp-header';
+import { CompSidebarComponent } from '../components/comp-sidebar/comp-sidebar';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     ContactPage,
     HomePage,
     SplashPage,
-    LoginPage
+    LoginPage,
+    CompHeaderComponent,
+    CompSidebarComponent
   ],
   imports: [
     BrowserModule,

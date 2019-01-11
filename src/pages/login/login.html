@@ -7,19 +7,36 @@
 <ion-content padding>
   <div class=form>
     <form (ngSubmit)="doLogin()">
-        <ion-list>
-            <ion-item>
-                <ion-label floating>Username</ion-label>
-                <ion-input type="text" [(ngModel)]=login.user name=user></ion-input>
-              </ion-item>
-            
-              <ion-item>
-                <ion-label floating>Password</ion-label>
-                <ion-input type="password" [(ngModel)]=login.passwd name=passwd></ion-input>
-              </ion-item>           
-              
-            </ion-list>
-            <button ion-button type="submit" full>Login</button>
+      <div class="card-image">
+        <div class="user-image">
+          <img src="/assets/imgs/login-image.png" alt="">
+        </div>
+      </div>
+      <ion-list *ngIf=comp.form>
+        <ion-item>
+          <ion-label floating><i class="fa fa-user"></i> Username</ion-label>
+          <ion-input type="text" [(ngModel)]=login.user name=user></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating><i class="fa fa-lock"></i> Password</ion-label>
+          <ion-input type="password" [(ngModel)]=login.passwd name=passd></ion-input>
+        </ion-item>
+        
+        <!-- <ion-item></ion-item> -->
+
+      </ion-list>
+      <ion-list *ngIf=comp.loading>
+        <ion-spinner name=crescent></ion-spinner>
+        <span>Please Wait...</span>
+      </ion-list>
+      <div *ngIf=comp.form>
+
+        <div class="error text-center m-t-b-30" *ngIf=error.disp>{{error.msg}}</div>
+      </div>
+      <div class="submit-button" *ngIf=comp.form>
+        <button ion-button shape="round" type="submit" round color="dark-grey">Login</button>
+      </div>
     </form>
   </div>
 </ion-content>
