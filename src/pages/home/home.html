@@ -3,5 +3,76 @@
 </ion-header>
 
 <ion-content padding>
-  
+  <comp-sidebar></comp-sidebar>
+  <div class="right-body" *ngIf=sidebar?.comp?.users>
+    <h2>Users</h2>
+    <div class="table-responsive">
+      <table class="table my-table">
+        <thead>
+          <tr>
+            <th>sl. No.</th>
+            <th>login ID</th>
+            <th>name</th>
+            <th>designation</th>
+            <th colspan=3>action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of sidebar.data.users">
+            <td>{{i.id}}</td>
+            <td>{{i.loginid}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.designation}}</td>
+            <td><button ion-button>change password</button></td>
+            <td><button ion-button>change details</button></td>
+            <td><button ion-button>block</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class=pagination>
+        <span *ngFor='let i of sidebar.data.pages'>
+          <button ion-button>{{i}}</button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="right-body" *ngIf=sidebar?.comp?.form?.addUser>
+    <div class="form-container">
+      <div class="form-center">
+        <form (ngSubmit)=createUser()>
+          <ion-list>
+            <ion-item>
+              <ion-label floating>Login ID</ion-label>
+              <ion-input type="text" [(ngModel)]=newUser.loginid name="loginid"></ion-input>
+              <div *ngIf="frmError.comp == loginid" class=error>{{frmError.msg}}</div>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Full Name</ion-label>
+              <ion-input type="text" [(ngModel)]=newUser.name name="name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Designation</ion-label>
+              <ion-input type="text" [(ngModel)]=newUser.designation name="designation"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Password</ion-label>
+              <ion-input type="password" [(ngModel)]=newUser.passwd name="password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Confirm Password</ion-label>
+              <ion-input type="password" [(ngModel)]=newUser.cnfpass name="confirmpassword"></ion-input>
+            </ion-item>
+          </ion-list>
+          <div class="add-user-btn">
+            <button ion-button type="submit" small>Add users</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf=sidebar?.comp?.loader>
+    <div class=loader>
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
 </ion-content>

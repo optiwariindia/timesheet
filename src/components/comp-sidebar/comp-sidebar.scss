@@ -1,3 +1,40 @@
 comp-sidebar {
+    $color_1: #606060;
 
+    .side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 267px;
+        border-right: 1px solid #ccc;
+        ul {
+            padding: 0;
+            margin: 0;
+            li {
+                list-style: none;
+                a {
+                    display: block;
+                    padding: 15px 10px;
+                    color: $color_1;
+                    border-bottom: 1px solid #ccc;
+                    text-decoration: none;
+                    font-size: 17px;
+                    text-transform: capitalize;
+                }
+                a.active {
+                    background: #e9eff5;
+                }
+            }
+        }
+    }
+    .user-name {
+        padding: 30px 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: $color_1;
+        border-bottom: 1px solid #ccc;
+    }
 }
+    

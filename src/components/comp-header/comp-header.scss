@@ -1,20 +1,40 @@
 comp-header {
-    .my-container {
+    $color_1: #fff;
+
+    .my-header {
         background: #3f51b5;
-        float: left;
+    }
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
     }
-    nav.my-navbar {
-        float: right;
-        line-height: 43px;
+    .logo {
+        background: #303f9f;
+        padding: 15px 10px;
     }
-    nav.my-navbar ul{padding: 0; margin: 0;}
-    nav.my-navbar ul li {list-style: none; line-height: 72px;}
-    nav.my-navbar ul li a {
-        color: #fff;
-        font-size: 20px;
+    .justify-content-space-between {
+        justify-content: space-between;
     }
-    nav.my-navbar ul li a i {
-        margin-right: 10px;
+    .log-out {
+        ul {
+            padding: 0;
+            margin: 0;
+            li {
+                list-style: none;
+                line-height: 91px;
+                margin-right: 40px;
+                a {
+                    color: $color_1;
+                    font-size: 20px;
+                    display: block;
+                    text-decoration: none;
+                    i {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
     }
+    
 }

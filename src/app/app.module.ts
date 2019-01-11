@@ -17,6 +17,7 @@ import { WebapiProvider } from '../providers/webapi/webapi';
 import { HttpClientModule } from '@angular/common/http';
 import { CompHeaderComponent } from '../components/comp-header/comp-header';
 import { CompSidebarComponent } from '../components/comp-sidebar/comp-sidebar';
+import { ProvideSidebarProvider } from '../providers/provide-sidebar/provide-sidebar';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { CompSidebarComponent } from '../components/comp-sidebar/comp-sidebar';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    WebapiProvider
+    WebapiProvider,
+    ProvideSidebarProvider
   ]
 })
 export class AppModule {}

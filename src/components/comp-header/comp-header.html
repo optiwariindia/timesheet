@@ -1,12 +1,14 @@
-<div class="my-container">
-		<div class="col-sm-2 padding-0">
-			<div class="logo"><img src="images/logo.png" alt=""></div>
-		</div>
-		<div class="col-sm-10">
-			<nav class="my-navbar">
-				<ul>
-					<li><a (click)=logout()><i class="fa fa-user"></i>Log Out</a></li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+<div class="my-header">
+  <div class="my-container flex-container justify-content-space-between">
+    <div class="logo">
+      <a href="/">
+        <img src="/assets/imgs/logo.png" alt="">
+      </a>
+    </div>
+    <div class="log-out">
+      <ul>
+        <li><a (click)=logout()><i class="fa fa-user"></i>Log Out</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProvideSidebarProvider } from '../../providers/provide-sidebar/provide-sidebar';
 
 /**
  * Generated class for the CompSidebarComponent component.
@@ -14,9 +15,8 @@ export class CompSidebarComponent {
 
   text: string;
 
-  constructor() {
-    console.log('Hello CompSidebarComponent Component');
-    this.text = 'Hello World';
+  constructor(public sidelinks:ProvideSidebarProvider) {
+    
   }
 
 }

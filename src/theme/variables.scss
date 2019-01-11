@@ -87,3 +87,19 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+.label{text-align: initial;}
+.loader {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: rgba(0,0,0,.5);
+ion-spinner {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+}
+}
