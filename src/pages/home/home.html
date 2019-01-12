@@ -23,9 +23,12 @@
             <td>{{i.loginid}}</td>
             <td>{{i.name}}</td>
             <td>{{i.designation}}</td>
-            <td><button ion-button>change password</button></td>
-            <td><button ion-button>change details</button></td>
-            <td><button ion-button>block</button></td>
+            <td><button ion-button small (click)=changePasswdForm(i)>change password</button></td>
+            <td><button ion-button small (click)=changeDetails(i)>change details</button></td>
+            <td *ngIf="i.role==1"><button ion-button small (click)=removeAdmin(i)>Remove Admin</button></td>
+            <td *ngIf="i.role==2"><button ion-button small (click)=makeAdmin(i)>Convert Admin</button></td>
+            <td *ngIf="i.active==1"><button ion-button small (click)=blockUserForm(i)>Deactivate</button></td>
+            <td *ngIf="i.active==0"><button ion-button small (click)=activateUserForm(i)>Activate</button></td>
           </tr>
         </tbody>
       </table>
@@ -78,23 +81,24 @@
       <ion-spinner></ion-spinner>
     </div>
   </div>
-  <div class="change-password-popup" *ngIf=false>
+  <div class="change-password-popup" *ngIf=form.pwchange>
     <div class="form-container">
       <div class="form-center">
-        <h3>Change Password for (shakir)</h3>
-        <form>
+        <h3>{{form.heading}}</h3>
+        <form (ngSubmit)=changePasswd()>
           <ion-list>
             <ion-item>
               <ion-label floating>Password</ion-label>
-              <ion-input type="password" name="changepassword"></ion-input>
+              <ion-input type="password" [(ngModel)]=newUser.passwd name="passwd"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label floating>Confirm Password</ion-label>
-              <ion-input type="password" name="confirmchangepassword"></ion-input>
+              <ion-input type="password" [(ngModel)]=newUser.cnfpass name="cnfpass"></ion-input>
             </ion-item>
+            <div class=error>{{frmError.cnfpass}}</div>
           </ion-list>
           <div class="add-user-btn">
-            <button ion-button type="cancle" small color="light">Cancle</button>
+            <button ion-button (click)=hideForms() small color="light">Cancle</button>
             <button ion-button type="submit" small>Save Changes</button>
           </div>
         </form>
@@ -102,13 +106,14 @@
     </div>
   </div>
 
-  <div class="change-password-popup" *ngIf=false>
+  <div class="change-password-popup" *ngIf=form.blockUser>
     <div class="form-container">
       <div class="form-center">
-        <h3>Block (shakir)</h3>
+        <h3>Block User</h3>
+        <div >{{form.heading}}</div>
         <div class="add-user-btn">
-          <button ion-button type="cancle" small color="light">Cancle</button>
-          <button ion-button type="submit" small>Save Changes</button>
+          <button ion-button (click)=hideForms() small color="light">No</button>
+          <button ion-button type="submit" (click)=blockUser(target) small>Yes</button>
         </div>
       </div>
     </div>
