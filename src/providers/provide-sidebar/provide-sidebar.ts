@@ -12,6 +12,7 @@ export class ProvideSidebarProvider {
   userinfo:any={
     name:"",
     role:"",
+    sesskey:"",
     sidebarBtns:{}
   };
   data:any;
@@ -34,6 +35,7 @@ export class ProvideSidebarProvider {
       var r=JSON.parse(resp);
       this.userinfo.name=r.name;
       this.userinfo.role=r.role;
+      this.userinfo.sesskey=r.sesskey;
       this.showAdminMenu();
     });
   }
@@ -60,6 +62,7 @@ export class ProvideSidebarProvider {
   AdminUserList(p){
     this.resetAll();
     var userlist={
+      sesskey:this.userinfo.sesskey,
       module:"users",
       action:"list",
       limit:10,
@@ -71,14 +74,13 @@ export class ProvideSidebarProvider {
       this.comp.users=true;
       this.userinfo.sidebarBtns.user.addbtn=true;
       this.comp.loader=false;
-    })
+    });
     
   }
   AdminUserAdd(){
     this.resetAll();
     this.comp.form.addUser=true;
     this.comp.loader=false;
-    console.log(this.comp);
   }
   AdminUserChangePasswd(u){
 

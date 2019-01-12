@@ -16,29 +16,52 @@ export class HomePage {
     passwd:"",
     cnfpass:"",
     module:"users",
-    action:"add"
+    action:"add",
+    sesskey:""
   };
   frmError={
-    comp:"",
-    msg:""
+    loginid:"",
+    cnfpass:""
   };
   constructor(public navCtrl: NavController,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider) {
   }
+  errorReset(){
+    this.frmError.loginid="";
+    this.frmError.cnfpass="";
+  }
+  formReset(){
+    this.newUser={
+      loginid:"",
+      name:"",
+      designation:"",
+      passwd:"",
+      cnfpass:"",
+      module:"users",
+      action:"add",
+      sesskey:""
+    };
+  }
   createUser(){
-    var apiresp=this.webapi.getData(this.newUser);
-    apiresp.subscribe(r=>{
-      var resp=JSON.parse(JSON.stringify(r));
-      console.log(resp);
-      switch(resp.status.type){
-        case 'error':
-          this.frmError={
-            comp:resp.status.error.type,
-            msg:resp.status.error.msg
-          };
-          console.log(this.frmError);
-        break;
-      }
-    });
+    this.newUser.sesskey=this.sidebar.userinfo.sesskey;
+    this.errorReset();
+    if(this.newUser.passwd!=this.newUser.cnfpass){
+      this.frmError.cnfpass="Your password is not matching";
+    }else{
+      var apiresp=this.webapi.getData(this.newUser);
+      apiresp.subscribe(r=>{
+        var resp=JSON.parse(JSON.stringify(r));
+        if(resp.status.type=="error"){
+          switch(resp.status.error.type){
+            case "loginid":
+              this.frmError.loginid=resp.status.error.msg;
+            break;
+          }
+        }else{
+          this.formReset();
+          this.sidebar.AdminUserList(0);
+        }
+      });
+    }
   }
 
 }

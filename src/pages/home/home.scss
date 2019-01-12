@@ -9,34 +9,27 @@ page-home {
     }
     .my-table thead tr th {
         text-transform: capitalize;
+        text-align:center;
     }
-    .my-table thead tr th:last-child {
-        text-align: center;
-        border-left: 1px solid #ccc;
-    }
+    
     .my-table tbody tr td {
         color: #606060;
+        text-align:center;
     }
-    .my-table tbody tr td:last-child {
-        display: flex;
-        justify-content: space-evenly;
-        border-left: 1px solid #ccc;
-    }
+    
     .my-table tbody tr td button {
-        background: #e9eff5;
         border: none;
         padding: 5px 10px;
     }
     .form-center {
         width: 65%;
         margin: 100px auto 0;
+        padding: 15px;
     }
     .form-center form {
         border: 1px solid #ccc;
-        padding: 15px;
         float: left;
     }
-    .label{text-align: initial;}
     .form-center ion-label {
         margin: 0;
         padding: 0;
@@ -58,10 +51,108 @@ page-home {
     .add-user-btn {
         float: left;
         width: 100%;
-        text-align: center;
+        text-align: right;
     }
     .add-user-btn button {
-        font-size: 20px;
+        font-size: 14px;
+        font-weight: normal;
+    }
+    .change-password-popup .list-md {
+        float: none;
+    }
+    .change-password-popup {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,.5);
+    }
+    
+    .change-password-popup .form-container {
+        float: left;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+    
+    .change-password-popup .form-container .form-center {
+        width: 25%;
+        margin: auto;
+        background: #fff;
+    }
+    
+    .change-password-popup .form-container .form-center .list-md ion-item {
+        width: 100%;
+        padding: 0;
+    }
+    .change-password-popup .form-container .form-center h3 {
+        color: #606060;
+        text-align: center;
+        font-size: 18px;
+        margin: 0 0 25px;
+    }
+    .manager thead tr {
+        border-top: 1px solid #ccc;
+    }
+    .manager thead tr th {
+        border: 1px solid #ccc;
+    }
+    .manager tbody tr td {
+        width: 125px;
+        color: #606060;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+    }
+    .body-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+    .view-date-by {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+    }
+    .view-date-by span {
+        color: #606060;
+    }
+    .body-header h2 {
+        margin: 0;
+    }
+    .buttons {
+        width: 25%;
+        text-align: center;
+    }
+    .user-dashboard tbody tr td:first-child {
+        width: 80px;
+        border-right: 1px solid #ccc;
+        font-size: 11px;
+        position: relative;
+    }
+    .user-dashboard tbody tr td {
+        border-top: none;
+    }
+    .user-dashboard tbody tr td:last-child {
+        border-bottom: 1px solid #ccc;
+    }
+    .user-dashboard tbody tr td:first-child span {
+        position: absolute;
+        bottom: -7px;
+        width: 56px;
+        right: 16px;
+        text-align: right;
+    }
+    .user-dashboard tbody tr td:first-child:after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 12px;
+        background: #ccc;
+        right: 0;
+        bottom: -1px;
     }
     }
     
