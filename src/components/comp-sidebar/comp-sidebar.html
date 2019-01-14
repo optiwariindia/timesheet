@@ -4,6 +4,9 @@
     {{sidelinks?.userinfo.name}}
   </div>
   <ul>
+    <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.timesheet?.disp>
+        <a href="#" class="active" (click)='sidelinks.timesheet()' ><i class="fa fa-user"></i>MyDashboard</a>
+    </li>
     <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.user?.disp>
       <a href="#" class="active" (click)='sidelinks.AdminUserList(0)' ><i class="fa fa-user"></i>user</a>
       <ul>
@@ -11,12 +14,7 @@
       </ul>
     </li>
     <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.report>
-        <a href="#" class="active" ><i class="fa fa-user"></i>Report</a>
-        <ul>
-          <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.report?.daily ><a href="#">Daily</a></li>
-          <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.report?.weekly ><a href="#">Weekly</a></li>
-          <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.report?.monthly ><a href="#">Monthly</a></li>
-        </ul>
-      </li>
+      <a href="#" class="active" (click)='sidelinks.ShowReports()'><i class="fa fa-user"></i>Report</a>
+    </li>
   </ul>
 </div>

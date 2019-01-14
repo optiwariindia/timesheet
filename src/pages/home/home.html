@@ -147,17 +147,17 @@
     </div>
   </div>
 
-  <div class="right-body" *ngIf=sidebar?.comp?.users>
+  <div class="right-body" *ngIf=sidebar?.comp?.reports>
     <div class="body-header">
       <h2>Timesheet Reports ({{report.Name}})</h2>
       <div class="buttons">
-        <button ion-button type="cancle" small>Daily</button>
-        <button ion-button type="cancle" small color="secondary">Weekly</button>
-        <button ion-button type="cancle" small>Month</button>
+        <button ion-button type="cancle" (click)=report.changeReportType(1) small>Daily</button>
+        <button ion-button type="cancle" (click)=report.changeReportType(2) small color="secondary">Weekly</button>
+        <button ion-button type="cancle" (click)=report.changeReportType(3)  small>Monthly</button>
         <div class="view-date-by">
-          <button ion-button type="cancle" small color="light"><ion-icon name="arrow-back"></ion-icon></button>
+          <button ion-button type="cancle" (click)=report.back() small color="light"><ion-icon name="arrow-back"></ion-icon></button>
           <span>{{report.Date}}</span>
-          <button ion-button type="cancle" small color="light"><ion-icon name="arrow-forward"></ion-icon></button>
+          <button ion-button type="cancle" (click)=report.next() small color="light"><ion-icon name="arrow-forward"></ion-icon></button>
         </div>
       </div>
     </div>
@@ -166,146 +166,52 @@
         <thead>
           <tr>
             <th>Name of User</th>
-            <th>9</th>
-            <th>10</th>
-            <th>11</th>
-            <th>12</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
+            <th>Activity</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>user 1</strong></td>
-            <td>Weekly Off</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 2</strong></td>
-            <td>9:00-11:00 Meeting</td>
-            <td></td>
-            <td>Weekly Off</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 3</strong></td>
-            <td>10:00-12:00 Out of office</td>
-            <td></td>
-            <td>Weekly Off</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 4</strong></td>
-            <td>9:00-11:00 Meeting 14:00-16:00 Out of office</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 5</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 6</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 7</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>user 8</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let i of sidebar.data.users">
+            <td><strong>{{i.name}}</strong></td>
+            <td>
+              <table><tr *ngFor="let act of i.acts">
+                <td>{{act.start}}</td>
+                <td>{{act.end}}</td>
+                <td>{{act.activity}}</td>
+                <td>{{act.remarks}}</td>
+                <td>{{act.udpated_on}}</td>
+              </tr></table>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    </div>
-
-    <div class="right-body" *ngIf=false>
-      <div class="body-header">
-        <h2>9-jan-2019</h2>
-        <div class="buttons">
-          <button ion-button type="cancle" small>Daily</button>
-          <button ion-button type="cancle" small color="secondary">Weekly</button>
-          <button ion-button type="cancle" small>Month</button>
-          <div class="view-date-by">
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-back"></ion-icon>
-            </button>
-            <span>1-Jan-19</span>
-            <span>30-Jan-19</span>
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-forward"></ion-icon>
-            </button>
-          </div>
+  </div>
+  <div class=right-body *ngIf=sidebar?.comp?.timesheet>
+    <div class="body-header">
+      <h2>{{report.Name}}</h2>
+      <div class="buttons">
+        <button ion-button type="cancle" (click)=report.changeReportType(1) small>Daily</button>
+        <button ion-button type="cancle" (click)=report.changeReportType(2) small color="secondary">Weekly</button>
+        <button ion-button type="cancle" (click)=report.changeReportType(3) small>Monthly</button>
+        <div class="view-date-by">
+          <button ion-button type="cancle" (click)=report.back() small color="light">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <span>{{report.Date | date: "dd"}} <span>{{report.Date | date: "MMMM"}}</span> {{report.Date | date: "yyyy"}}</span>
+          <button ion-button type="cancle" (click)=report.next() small color="light">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
         </div>
       </div>
-      <div class="table-responsive">
+    </div>
+    <div class="table-responsive">
         <table class="table user-dashboard">
           <thead>
             <tr>
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody (click)=report.showAddActivityForm()>
             <tr>
               <td><span>9:00 AM</span></td>
               <td>click to add activity</td>
@@ -349,181 +255,38 @@
           </tbody>
         </table>
       </div>
-    </div>
-
-    <div class="right-body" *ngIf=false>
-      <div class="body-header">
-        <h2>9-jan-2019</h2>
-        <div class="buttons">
-          <button ion-button type="cancle" small>Daily</button>
-          <button ion-button type="cancle" small color="secondary">Weekly</button>
-          <button ion-button type="cancle" small>Month</button>
-          <div class="view-date-by">
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-back"></ion-icon>
-            </button>
-            <span>1-Jan-19</span>
-            <span>30-Jan-19</span>
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-forward"></ion-icon>
-            </button>
+  </div>
+  <div class="change-password-popup" *ngIf=report?.form?.addActivity>
+    <div class="form-container">
+      <div class="form-center">
+        <h3>Add an activity</h3>
+        <form (ngSubmit)=report.addActivity()>
+          <ion-list>
+            <ion-item >
+              <ion-label floating>Activity Title</ion-label>
+              <ion-input name=activity [(ngModel)]="report.activity.activity"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Start Time</ion-label>
+              <!-- <input type="datetime-local" [(ngModel)]=report.activity.start name=start> -->
+                <ion-datetime type=datetime-local displayFormat="DD-MMM-YYYY HH:mm:ss" pickerFormat="DD-MMM-YYYY HH:mm:ss" [(ngModel)]="report.activity.start" name="start"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Completion time</ion-label>
+              <ion-datetime displayFormat="DD-MMM-YYYY HH:mm:ss" pickerFormat="DD-MMM-YYYY HH:mm:ss" [(ngModel)]="report.activity.end" name="end"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label >Remarks</ion-label>
+              <ion-textarea [(ngModel)]="report.activity.remarks" name=remarks></ion-textarea>
+              
+            </ion-item>
+          </ion-list>
+          <div class="add-user-btn">
+            <button ion-button (click)=report.hideForms() small color="light">Cancle</button>
+            <button ion-button type="submit" small>Save Changes</button>
           </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table Explanation">
-          <thead>
-            <tr>
-              <th>Explanation called for</th>
-              <th>Explanation Called by</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="#">Activity Reference</a></td>
-              <td>Manager Name</td>
-              <td>Send Explanation</td>
-            </tr>
-          </tbody>
-        </table>
+        </form>
       </div>
     </div>
-
-    <div class="right-body" *ngIf=false>
-      <div class="body-header">
-        <h2>User</h2>
-        <div class="buttons">
-          <button ion-button type="cancle" small>Daily</button>
-          <button ion-button type="cancle" small color="secondary">Weekly</button>
-          <button ion-button type="cancle" small>Month</button>
-          <div class="view-date-by">
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-back"></ion-icon>
-            </button>
-            <span>1-Jan-19</span>
-            <span>30-Jan-19</span>
-            <button ion-button type="cancle" small color="light">
-              <ion-icon name="arrow-forward"></ion-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table manager">
-          <thead>
-            <tr>
-              <th>Name of User</th>
-              <th>9</th>
-              <th>10</th>
-              <th>11</th>
-              <th>12</th>
-              <th>1</th>
-              <th>2</th>
-              <th>3</th>
-              <th>4</th>
-              <th>5</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>user 1</strong></td>
-              <td>Weekly Off</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 2</strong></td>
-              <td>9:00-11:00 Meeting</td>
-              <td></td>
-              <td>Weekly Off</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 3</strong></td>
-              <td>10:00-12:00 Out of office</td>
-              <td></td>
-              <td>Weekly Off</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 4</strong></td>
-              <td>9:00-11:00 Meeting 14:00-16:00 Out of office</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 5</strong></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 6</strong></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 7</strong></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>user 8</strong></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-</ion-content>
+  </div>
+  </ion-content>

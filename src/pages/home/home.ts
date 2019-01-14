@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ProvideSidebarProvider } from '../../providers/provide-sidebar/provide-sidebar';
 import { WebapiProvider } from '../../providers/webapi/webapi';
-import { CompSidebarComponent } from '../../components/comp-sidebar/comp-sidebar';
+import { ReportsProvider } from '../../providers/reports/reports';
 
 @Component({
   selector: 'page-home',
@@ -29,7 +29,7 @@ export class HomePage {
     blockUser:false,
   };
   target:any;
-  constructor(public navCtrl: NavController,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider) {
+  constructor(public navCtrl: NavController,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider,public report:ReportsProvider) {
     this.target={};
   }
   errorReset(){

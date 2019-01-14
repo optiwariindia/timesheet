@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { WebapiProvider } from '../webapi/webapi';
+import { ReportsProvider } from '../reports/reports';
 /*
   Generated class for the ProvideSidebarProvider provider.
 
@@ -19,6 +20,7 @@ export class ProvideSidebarProvider {
   comp:any={
     users:false,
     loader:false,
+    reports:false,
     report:{
       daily:false,
       weekly:false,
@@ -31,7 +33,7 @@ export class ProvideSidebarProvider {
       chageUserInfo:false
     }
   }
-  constructor(public store:Storage,public webapi:WebapiProvider) {
+  constructor(public store:Storage,public webapi:WebapiProvider,public report:ReportsProvider) {
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
       this.userinfo.name=r.name;
@@ -43,7 +45,8 @@ export class ProvideSidebarProvider {
   resetAll(){
     this.comp={
       users:false,
-      loader:true,
+      loader:false,
+      reports:false,
       report:{
         daily:false,
         weekly:false,
@@ -86,12 +89,22 @@ export class ProvideSidebarProvider {
     this.comp.loader=false;
   }
   AdminUserChangePasswd(u){
-
   }
   AdminUserChangeInfo(u){
-
   }
   AdminUserDisable(u){
-
+  }
+  ShowReports(){
+    this.resetAll();
+    this.comp.reports=true;
+    this.report.Name="Daily Report";
+    this.report.Date=Date();
+  }
+  timesheet(){
+    this.report.Name="Daily Report";
+    this.report.Date=Date();
+    this.comp.timesheet=true;
+    console.log("Daily Report called");
+    console.log(this);
   }
 }
