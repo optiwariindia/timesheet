@@ -84,7 +84,7 @@
   <div class="change-password-popup" *ngIf=form.pwchange>
     <div class="form-container">
       <div class="form-center">
-        <h3>{{form.heading}}</h3>
+        <h3>{{form.heading[0]}}</h3>
         <form (ngSubmit)=changePasswd()>
           <ion-list>
             <ion-item>
@@ -109,8 +109,8 @@
   <div class="change-password-popup" *ngIf=form.blockUser>
     <div class="form-container">
       <div class="form-center">
-        <h3>Block User</h3>
-        <div >{{form.heading}}</div>
+        <h3>{{form.heading[0]}}</h3>
+        <div >{{form.heading[1]}}</div>
         <div class="add-user-btn">
           <button ion-button (click)=hideForms() small color="light">No</button>
           <button ion-button type="submit" (click)=blockUser(target) small>Yes</button>

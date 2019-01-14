@@ -25,7 +25,7 @@ export class HomePage {
   };
   form={
     pwchange:false,
-    heading:"",
+    heading:["",""],
     blockUser:false,
   };
   target:any;
@@ -93,7 +93,7 @@ export class HomePage {
     }
   }
   changePasswdForm(i){
-    this.form.heading="Change password of "+i.loginid;
+    this.form.heading=["Change password of "+i.loginid];
     this.form.pwchange=true;
     this.newUser={
       loginid:i.loginid,
@@ -109,7 +109,7 @@ export class HomePage {
   hideForms(){
     this.form={
       pwchange:false,
-      heading:"",
+      heading:["",""],
       blockUser:false
     }
   }
@@ -118,12 +118,12 @@ export class HomePage {
   }
   blockUserForm(i){
     this.form.blockUser=true;
-    this.form.heading="Do you really want to block "+i.loginid;
+    this.form.heading=["Block User","Do you really want to block "+i.loginid];
     this.target=i;
   }
   activateUserForm(i){
     this.form.blockUser=true;
-    this.form.heading="Do you want to activate " + i.loginid;
+    this.form.heading=["Activate User","Do you want to activate " + i.loginid];
     this.target=i;
   }
   blockUser(i){

@@ -58,6 +58,7 @@ export class ProvideSidebarProvider {
   showAdminMenu(){
     this.userinfo.sidebarBtns.user={addbtn:false,disp:true};
     this.userinfo.sidebarBtns.report={disp:true,daily:false,weekly:false,monthly:false};
+    this.userinfo.sidebarBtns.timesheet={disp:true,others:false}
   }
   AdminUserList(p){
     this.resetAll();

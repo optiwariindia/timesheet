@@ -11,7 +11,9 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
 @Injectable()
 export class WebapiProvider {
   webapi={
-    path:"http://192.168.1.230:8080/"
+    //path:"http://192.168.1.230:8080/"
+    //path:"http://localhost/"
+    path:"/api/"
   };
   constructor(public http: HttpClient) {
     console.log('Hello WebapiProvider Provider');
