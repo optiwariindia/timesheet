@@ -25,6 +25,8 @@ export class CompHeaderComponent {
     this.store.clear();
     this.navCtrl.setRoot(LoginPage);
   }
-
+  changePasswd(){
+    
+  }
   
 }

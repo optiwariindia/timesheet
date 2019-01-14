@@ -4,6 +4,20 @@
 
 <ion-content padding>
   <comp-sidebar></comp-sidebar>
+  <div class="right-body" *ngIf=sidebar?.comp?.dashboard>
+    <div class='table-responsive'>
+    <table width=100%  cellspacing=0>
+      <tr>
+        <td *ngFor="let i of ['TUE','WED','THU','FRI','SAT','SUN','MON']">
+          {{i}}
+        </td>
+      </tr>
+      <tr>
+        <td *ngFor="let i of [1,2,3,4,5,6,7]">{{i}}</td>
+      </tr>
+    </table>
+  </div>
+  </div>
   <div class="right-body" *ngIf=sidebar?.comp?.users>
     <h2>Users</h2>
     <div class="table-responsive">
@@ -212,45 +226,16 @@
             </tr>
           </thead>
           <tbody (click)=report.showAddActivityForm()>
-            <tr>
-              <td><span>9:00 AM</span></td>
-              <td>click to add activity</td>
+            <tr *ngFor="let rep of report.userReport">
+              <td>
+                {{rep.activity}}
+              </td>
+              <td>
+                {{rep.remarks}}
+              </td>
             </tr>
             <tr>
-              <td><span>10:00 AM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>11:00 AM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>12:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>1:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>2:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>3:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>4:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>5:00 PM</span></td>
-              <td>click to add activity</td>
-            </tr>
-            <tr>
-              <td><span>6:00 PM</span></td>
-              <td>click to add activity</td>
+              <td colspan=2>Click here to add Activity</td>
             </tr>
           </tbody>
         </table>
@@ -262,25 +247,20 @@
         <h3>Add an activity</h3>
         <form (ngSubmit)=report.addActivity()>
           <ion-list>
+          <ion-item>
+            <ion-label floating>Time</ion-label>
+            <ion-input type="time" [(ngModel)]=report.activity.time name=time></ion-input>
+          </ion-item>
             <ion-item >
               <ion-label floating>Activity Title</ion-label>
               <ion-input name=activity [(ngModel)]="report.activity.activity"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label floating>Start Time</ion-label>
-              <!-- <input type="datetime-local" [(ngModel)]=report.activity.start name=start> -->
-                <ion-datetime type=datetime-local displayFormat="DD-MMM-YYYY HH:mm:ss" pickerFormat="DD-MMM-YYYY HH:mm:ss" [(ngModel)]="report.activity.start" name="start"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Completion time</ion-label>
-              <ion-datetime displayFormat="DD-MMM-YYYY HH:mm:ss" pickerFormat="DD-MMM-YYYY HH:mm:ss" [(ngModel)]="report.activity.end" name="end"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label >Remarks</ion-label>
+              <ion-label floating>Remarks</ion-label>
               <ion-textarea [(ngModel)]="report.activity.remarks" name=remarks></ion-textarea>
-              
             </ion-item>
           </ion-list>
+          <div class=error>{{error}}</div>
           <div class="add-user-btn">
             <button ion-button (click)=report.hideForms() small color="light">Cancle</button>
             <button ion-button type="submit" small>Save Changes</button>

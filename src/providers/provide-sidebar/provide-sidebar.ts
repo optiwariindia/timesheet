@@ -11,6 +11,7 @@ import { ReportsProvider } from '../reports/reports';
 @Injectable()
 export class ProvideSidebarProvider {
   userinfo:any={
+    id:0,
     name:"",
     role:"",
     sesskey:"",
@@ -21,6 +22,7 @@ export class ProvideSidebarProvider {
     users:false,
     loader:false,
     reports:false,
+    dashboard:true,
     report:{
       daily:false,
       weekly:false,
@@ -36,6 +38,7 @@ export class ProvideSidebarProvider {
   constructor(public store:Storage,public webapi:WebapiProvider,public report:ReportsProvider) {
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
+      this.userinfo.id=r.id;
       this.userinfo.name=r.name;
       this.userinfo.role=r.role;
       this.userinfo.sesskey=r.sesskey;
@@ -101,6 +104,8 @@ export class ProvideSidebarProvider {
     this.report.Date=Date();
   }
   timesheet(){
+    //console.log(this.userinfo);
+    this.report.getReport();
     this.report.Name="Daily Report";
     this.report.Date=Date();
     this.comp.timesheet=true;

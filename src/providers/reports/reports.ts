@@ -11,21 +11,25 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class ReportsProvider {
   Name='';
+  error="";
   Date:any;
   retportType:Number;
   form:any={
     addActivity:false
   };
   activity={
-    start:"",
-    end:"",
+    actDate:"",
     activity:"",
     remarks:"",
     module:"reports",
     action:"addActivity",
     sesskey:""
   };
+  userReport:any;
+  report:any;
+  usersList:any;
   constructor(public webapi:WebapiProvider,public store:Storage) {
+    this.Date=Date();
     console.log('Hello ReportsProvider Provider');
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
@@ -50,15 +54,40 @@ export class ReportsProvider {
       break;
     }
   }
+  createUserReport(i){
+    this.userReport=[];
+    this.report.forEach(element => {
+      this.userReport.push({activity:element.activity,remarks:element.remarks,user:this.usersList[i].loginid});
+    });
+  }
+  getReport(){
+    var data={
+      sesskey:this.activity.sesskey,
+      action:"getReport",
+      reportType:this.retportType,
+      module:"reports",
+      repdate:this.Date
+    };
+    var apidata=this.webapi.getData(data);
+    apidata.subscribe(resp=>{
+      var r=JSON.parse(JSON.stringify(resp));
+      this.report=r.reports;
+      console.log(r);
+      this.usersList=r.usersList;
+      this.createUserReport(r.login.id);
+    });
+  }
   next(){
     var d=new Date(this.Date);
     d.setDate(d.getDate()+1);
     this.Date=d;
+    this.getReport();
   }
   back(){
     var d=new Date(this.Date);
     d.setDate(d.getDate()-1);
     this.Date=d;
+    this.getReport();
   }
   showAddActivityForm(){
     this.form.addActivity=true;
@@ -67,9 +96,18 @@ export class ReportsProvider {
     this.form.addActivity=false;
   }
   addActivity(){
+    this.activity.actDate=this.Date;
     var apiresp=this.webapi.getData(this.activity);
     apiresp.subscribe(resp=>{
-      console.log(resp);
+      var r=JSON.parse(JSON.stringify(resp));
+      if(r.status.result==false){
+        this.error="There is some issue. Please try latter";
+      }else{
+        this.activity.activity="";
+        this.activity.remarks="";
+        this.hideForms();
+        this.getReport();
+      }
     });
   }
 
