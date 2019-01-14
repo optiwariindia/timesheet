@@ -26,6 +26,7 @@ export class ProvideSidebarProvider {
     },
     form:{
       addUser:false,
+      updateUser:false,
       changePasswd:false,
       chageUserInfo:false
     }
@@ -50,6 +51,7 @@ export class ProvideSidebarProvider {
       },
       form:{
         addUser:false,
+        updateUser:false,
         changePasswd:false,
         chageUserInfo:false
       }
