@@ -19,6 +19,7 @@ export class HomePage {
     action:"add",
     sesskey:""
   };
+  cal:any;
   frmError={
     loginid:"",
     cnfpass:""
@@ -31,6 +32,36 @@ export class HomePage {
   target:any;
   constructor(public navCtrl: NavController,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider,public report:ReportsProvider) {
     this.target={};
+    this.createCal({month:1,year:2019});
+  }
+  createCal({month,year}){
+    this.cal=[];
+    var week=[];
+    var date=new Date(year+"-"+month+"-1");
+    var startd=date.getDay();
+    for(var i=0;i<startd;i++){
+      week.push("");
+    }
+    var acts=[];
+    if(week.length<7)
+    for(var j=0;j<5;j++){
+    for(var i=week.length;i<7;i++){
+      acts=[];
+      acts.push({user:'opt',time:"9:00",title:"Meeting",descr:"Meeting with Management"});
+      acts.push({user:'opt',time:"11:00",title:"Meeting",descr:"Meeting with Management"});
+      acts.push({user:'opt',time:"15:00",title:"Meeting",descr:"Meeting with Management"});
+      acts.push({user:'shakir',time:"9:00",title:"Meeting",descr:"Meeting with Management"});
+      acts.push({user:'shakir',time:"16:00",title:"Meeting",descr:"Meeting with Management"});
+      week.push({date:date.getDate(),acts:acts});
+      date.setDate(date.getDate()+1);
+    }
+    console.log(week);
+    this.cal.push(week);
+    week=[];
+  }
+  //console.log(date.getMonth()==month);
+  //console.log(this.cal);
+  this.sidebar.comp.dashboard=true;
   }
   errorReset(){
     this.frmError.loginid="";

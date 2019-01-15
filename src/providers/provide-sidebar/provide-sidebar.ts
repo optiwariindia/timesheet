@@ -22,7 +22,7 @@ export class ProvideSidebarProvider {
     users:false,
     loader:false,
     reports:false,
-    dashboard:true,
+    dashboard:false,
     report:{
       daily:false,
       weekly:false,

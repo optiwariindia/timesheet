@@ -30,6 +30,7 @@ export class ReportsProvider {
   usersList:any;
   constructor(public webapi:WebapiProvider,public store:Storage) {
     this.Date=Date();
+    this.report=[];
     console.log('Hello ReportsProvider Provider');
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
@@ -71,6 +72,7 @@ export class ReportsProvider {
     var apidata=this.webapi.getData(data);
     apidata.subscribe(resp=>{
       var r=JSON.parse(JSON.stringify(resp));
+      if("reports" in r)
       this.report=r.reports;
       console.log(r);
       this.usersList=r.usersList;

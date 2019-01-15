@@ -8,12 +8,17 @@
     <div class='table-responsive'>
     <table width=100%  cellspacing=0>
       <tr>
-        <td *ngFor="let i of ['TUE','WED','THU','FRI','SAT','SUN','MON']">
+        <td *ngFor="let i of ['SUN','MON','TUE','WED','THU','FRI','SAT']">
           {{i}}
         </td>
       </tr>
-      <tr>
-        <td *ngFor="let i of [1,2,3,4,5,6,7]">{{i}}</td>
+      <tr *ngFor="let week of cal">
+        <td *ngFor="let d of week">
+          <div class=date>{{d.date}}</div>
+          <div class=acts *ngFor='let a of d.acts'>
+            <div class=user>{{a.time}}[{{a.user}}]:{{a.title}}</div>
+          </div>        
+        </td>
       </tr>
     </table>
   </div>
