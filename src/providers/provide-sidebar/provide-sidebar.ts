@@ -64,7 +64,9 @@ export class ProvideSidebarProvider {
     } 
   }
   showAdminMenu(){
-    this.userinfo.sidebarBtns.user={addbtn:false,disp:true};
+    if(this.userinfo.role==1){
+      this.userinfo.sidebarBtns.user={addbtn:false,disp:true};
+    }
     this.userinfo.sidebarBtns.report={disp:true,daily:false,weekly:false,monthly:false};
     this.userinfo.sidebarBtns.timesheet={disp:true,others:false}
   }
@@ -104,7 +106,8 @@ export class ProvideSidebarProvider {
     this.report.Date=Date();
   }
   timesheet(){
-    //console.log(this.userinfo);
+    console.log(this.userinfo);
+    this.resetAll();
     this.report.getReport();
     this.report.Name="Daily Report";
     this.report.Date=Date();

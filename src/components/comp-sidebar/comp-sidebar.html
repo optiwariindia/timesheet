@@ -5,16 +5,13 @@
   </div>
   <ul>
     <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.timesheet?.disp>
-        <a href="#" class="active" (click)='sidelinks.timesheet()' ><i class="fa fa-user"></i>MyDashboard</a>
+        <a href="#" class="active" (click)='sidelinks.timesheet()' ><i class="fa fa-user"></i> MyDashboard</a>
     </li>
     <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.user?.disp>
-      <a href="#" class="active" (click)='sidelinks.AdminUserList(0)' ><i class="fa fa-user"></i>user</a>
+      <a href="#" class="active" (click)='sidelinks.AdminUserList(0)' ><i class="fa fa-user"></i> user</a>
       <ul>
-        <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.user?.addbtn ><a href="#" (click)='sidelinks.AdminUserAdd()'>add user</a></li>
+        <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.user?.addbtn ><a href="#" (click)='sidelinks.AdminUserAdd()'> add user</a></li>
       </ul>
-    </li>
-    <li *ngIf=sidelinks?.userinfo?.sidebarBtns?.report>
-      <a href="#" class="active" (click)='sidelinks.ShowReports()'><i class="fa fa-user"></i>Report</a>
     </li>
   </ul>
 </div>

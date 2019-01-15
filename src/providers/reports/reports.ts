@@ -17,6 +17,9 @@ export class ReportsProvider {
   form:any={
     addActivity:false
   };
+  months=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  month:any;
+  m:any;
   activity={
     actDate:"",
     activity:"",
@@ -30,13 +33,40 @@ export class ReportsProvider {
   usersList:any;
   constructor(public webapi:WebapiProvider,public store:Storage) {
     this.Date=Date();
+    var d=new Date();
+    d.setMonth(d.getMonth()+1);
+    this.month=this.months[d.getMonth()-1]+" "+d.getFullYear();
+    this.m={month:d.getMonth()+1,year:d.getFullYear()};
+    //console.log(this.m);
     this.report=[];
-    console.log('Hello ReportsProvider Provider');
+    //console.log('Hello ReportsProvider Provider');
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
       this.activity.sesskey=r.sesskey;
     });
     this.retportType=1;
+  }
+  nextMonth(){
+    var d=new Date(this.m.year+ "-" +this.m.month+"-1");
+    this.month=this.months[d.getMonth()]+" "+d.getFullYear();
+    this.m={month:d.getMonth()+2,year:d.getFullYear()};
+    if(this.m.month>11){
+      this.m.year-=1;
+      this.m.month=0;
+    }console.log(this.m);
+  }
+  lastMonth(){
+    var d=new Date(this.m.year+ "-" +this.m.month+"-1");
+    d.setMonth(d.getMonth());
+    console.log(d);
+    this.m={month:d.getMonth(),year:d.getFullYear()};
+    if(this.m.month==-1){
+      this.m.year-=1;
+      this.m.month=11;
+    }
+    this.month=this.months[this.m.month]+" "+this.m.year;
+    
+    console.log(this.m);
   }
   changeReportType(i){
     switch(i){
@@ -58,7 +88,7 @@ export class ReportsProvider {
   createUserReport(i){
     this.userReport=[];
     this.report.forEach(element => {
-      this.userReport.push({activity:element.activity,remarks:element.remarks,user:this.usersList[i].loginid});
+      this.userReport.push(element);
     });
   }
   getReport(){

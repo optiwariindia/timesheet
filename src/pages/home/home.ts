@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { ProvideSidebarProvider } from '../../providers/provide-sidebar/provide-sidebar';
 import { WebapiProvider } from '../../providers/webapi/webapi';
 import { ReportsProvider } from '../../providers/reports/reports';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -15,10 +16,19 @@ export class HomePage {
     designation:"",
     passwd:"",
     cnfpass:"",
+    color:"#ffffff",
     module:"users",
     action:"add",
     sesskey:""
   };
+  act={
+    popup:false,
+    descr:false,
+    edit:false,
+    reports:[],
+    details:[]
+  }
+  sesskey="";
   cal:any;
   frmError={
     loginid:"",
@@ -30,14 +40,19 @@ export class HomePage {
     blockUser:false,
   };
   target:any;
-  constructor(public navCtrl: NavController,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider,public report:ReportsProvider) {
-    this.target={};
-    this.createCal({month:1,year:2019});
+  constructor(public navCtrl: NavController,public store:Storage,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider,public report:ReportsProvider) {
+    var d=new Date(this.report.Date);
+    this.store.get("userinfo").then(resp=>{
+      var r=JSON.parse(resp);
+      this.sesskey=r.sesskey;
+      this.createCal({month:d.getMonth()+1,year:d.getFullYear()});
+    });    
   }
   createCal({month,year}){
     this.cal=[];
     var week=[];
     var date=new Date(year+"-"+month+"-1");
+    console.log(date);
     var startd=date.getDay();
     for(var i=0;i<startd;i++){
       week.push("");
@@ -45,20 +60,22 @@ export class HomePage {
     var acts=[];
     if(week.length<7)
     for(var j=0;j<5;j++){
-    for(var i=week.length;i<7;i++){
+    for(i=week.length;i<7;i++){
       acts=[];
-      acts.push({user:'opt',time:"9:00",title:"Meeting",descr:"Meeting with Management"});
-      acts.push({user:'opt',time:"11:00",title:"Meeting",descr:"Meeting with Management"});
-      acts.push({user:'opt',time:"15:00",title:"Meeting",descr:"Meeting with Management"});
-      acts.push({user:'shakir',time:"9:00",title:"Meeting",descr:"Meeting with Management"});
-      acts.push({user:'shakir',time:"16:00",title:"Meeting",descr:"Meeting with Management"});
-      week.push({date:date.getDate(),acts:acts});
       date.setDate(date.getDate()+1);
+      week.push({date:date.getDate(),month:date.getMonth(),year:date.getFullYear(),acts:acts});
+      var apidata=this.webapi.getData({module:'reports',action:'getRep',sesskey:this.sesskey,date:date,i:i,j:j});
+      apidata.subscribe(r=>{
+        var resp=JSON.parse(JSON.stringify(r));
+        for(var k=0;k<resp.rep.length;k++){
+          this.cal[resp.request.j][resp.request.i].acts.push({color:resp.rep[k].color,user:resp.rep[k].user,time:resp.rep[k].time,title:resp.rep[k].activity,descr:resp.rep[k].remarks});
+        }
+      });
     }
-    console.log(week);
     this.cal.push(week);
     week=[];
   }
+  
   //console.log(date.getMonth()==month);
   //console.log(this.cal);
   this.sidebar.comp.dashboard=true;
@@ -75,6 +92,7 @@ export class HomePage {
       designation:"",
       passwd:"",
       cnfpass:"",
+      color:"#ffffff",
       module:"users",
       action:"add",
       sesskey:""
@@ -130,6 +148,7 @@ export class HomePage {
       loginid:i.loginid,
       name:i.name,
       designation:i.designation,
+      color:i.color,
       passwd:"",
       cnfpass:"",
       module:"users",
@@ -207,4 +226,23 @@ export class HomePage {
       }
     });
   }  
+  openActsPopup(e){
+    this.act.popup=true;
+    this.act.reports=e;
+    console.log(this.act);
+  }
+  OpenActivity(e){
+    this.act.details=e;
+    this.act.descr=true;
+    this.closeActPopup();
+    console.log(e);
+  }
+  closeActDescr(){
+    this.act.descr=false;
+    console.log("Description closed");
+  }
+  closeActPopup(){
+    this.act.popup=false;
+    console.log("Close Act popup");
+  }
 }

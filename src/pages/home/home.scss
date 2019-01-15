@@ -1,158 +1,405 @@
 page-home {
-    .right-body {
-        width: 81.3%;
-        float: right;
-        padding: 0 15px;
+  .right-body {
+    width: 81.3%;
+    float: right;
+    padding: 0 15px;
+  }
+
+  .table>thead>tr>th {
+    border-bottom: none;
+  }
+
+  .my-table thead tr th {
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .my-table tbody tr td {
+    color: #606060;
+    text-align: center;
+  }
+
+  .my-table tbody tr td button {
+    border: none;
+    padding: 5px 10px;
+  }
+
+  .form-center {
+    width: 65%;
+    margin: 100px auto 0;
+    padding: 15px;
+  }
+
+  .form-center form {
+    border: 1px solid #ccc;
+    float: left;
+    padding: 10px
+  }
+
+  .error {
+    color: #f00;
+  }
+
+  .form-center ion-label span.error {
+    display: block;
+  }
+
+  .form-center ion-label {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .form-center .list-md {
+    float: left;
+  }
+
+  .form-center ion-item {
+    padding: 0px 20px;
+    width: 50%;
+    float: left;
+    margin-bottom: 25px;
+  }
+
+  .form-center .item-inner {
+    padding-right: 0 !important;
+  }
+
+  .add-user-btn {
+    float: left;
+    width: 100%;
+    text-align: right;
+  }
+
+  .add-user-btn button {
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  .change-password-popup .list-md {
+    float: none;
+  }
+
+  .change-password-popup {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+  }
+
+  .change-password-popup .form-container {
+    float: left;
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  .change-password-popup .form-container .form-center {
+    width: 25%;
+    margin: auto;
+    background: #fff;
+  }
+
+  .change-password-popup .form-container .form-center .list-md ion-item {
+    width: 100%;
+    padding: 0;
+  }
+
+  .change-password-popup .form-container .form-center h3 {
+    color: #606060;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 0 25px;
+  }
+
+  .manager thead tr {
+    border-top: 1px solid #ccc;
+  }
+
+  .manager thead tr th {
+    border: 1px solid #ccc;
+  }
+
+  .manager tbody tr td {
+    width: 125px;
+    color: #606060;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  .body-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .view-date-by {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .view-date-by span {
+    color: #606060;
+  }
+
+  .body-header h2 {
+    margin: 0;
+  }
+
+  .buttons {
+    width: 25%;
+    text-align: center;
+  }
+
+  .user-dashboard tbody tr td:first-child {
+    width: 80px;
+    border-right: 1px solid #ccc;
+    font-size: 11px;
+    position: relative;
+  }
+
+  .user-dashboard tbody tr td {
+    border-top: none;
+  }
+
+  .user-dashboard tbody tr td:last-child {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .user-dashboard tbody tr td:first-child span {
+    position: absolute;
+    bottom: -7px;
+    width: 56px;
+    right: 16px;
+    text-align: right;
+  }
+
+  .user-dashboard tbody tr td:first-child:after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 12px;
+    background: #ccc;
+    right: 0;
+    bottom: -1px;
+  }
+
+  .activiti-form {
+    float: left;
+    width: 100%;
+    box-shadow: 0px 0px 30px #ccc;
+    padding: 15px;
+
+    h3 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 15px;
     }
-    .table>thead>tr>th {
-        border-bottom: none;
+  }
+
+  .my-textarea {
+    float: left;
+    width: 100%;
+
+    ion-item {
+      width: 100%;
+
+      textarea {
+        resize: none;
+        height: 150px;
+      }
     }
-    .my-table thead tr th {
-        text-transform: capitalize;
-        text-align:center;
+  }
+
+  .activity-time {
+    float: left;
+    width: 100%;
+
+    ion-item {
+      width: 100%;
     }
-    
-    .my-table tbody tr td {
-        color: #606060;
-        text-align:center;
+  }
+
+  .my-textarea {
+    .item-inner {
+      border: 1px solid #dedede;
     }
-    
-    .my-table tbody tr td button {
-        border: none;
-        padding: 5px 10px;
-    }
-    .form-center {
-        width: 65%;
-        margin: 100px auto 0;
-        padding: 15px;
-    }
-    .form-center form {
-        border: 1px solid #ccc;
-        float: left;
-    }
-    .form-center ion-label {
-        margin: 0;
-        padding: 0;
-        font-size: 15px;
-        font-weight: 400;
-    }
-    .form-center .list-md {
-        float: left;
-    }
-    .form-center ion-item {
-        padding: 0px 20px;
-        width: 50%;
-        float: left;
-        margin-bottom: 25px;
-    }
-    .form-center .item-inner {
-        padding-right: 0 !important;
-    }
-    .add-user-btn {
-        float: left;
-        width: 100%;
-        text-align: right;
-    }
-    .add-user-btn button {
-        font-size: 14px;
-        font-weight: normal;
-    }
-    .change-password-popup .list-md {
-        float: none;
-    }
-    .change-password-popup {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0,0,0,.5);
-    }
-    
-    .change-password-popup .form-container {
-        float: left;
-        width: 100%;
-        height: 100%;
-        display: flex;
-    }
-    
-    .change-password-popup .form-container .form-center {
-        width: 25%;
-        margin: auto;
-        background: #fff;
-    }
-    
-    .change-password-popup .form-container .form-center .list-md ion-item {
-        width: 100%;
-        padding: 0;
-    }
-    .change-password-popup .form-container .form-center h3 {
-        color: #606060;
+  }
+
+  .calander {
+    tr {
+      th {
         text-align: center;
-        font-size: 18px;
-        margin: 0 0 25px;
-    }
-    .manager thead tr {
-        border-top: 1px solid #ccc;
-    }
-    .manager thead tr th {
         border: 1px solid #ccc;
+        border-top: 1px solid #ccc !important;
+      }
     }
-    .manager tbody tr td {
-        width: 125px;
-        color: #606060;
-        border-left: 1px solid #ccc;
+  }
+
+  .calander {
+    td {
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      position: relative;
+      width: 15%;
+    }
+  }
+
+  .calander {
+    tr {
+      td:last-child {
         border-right: 1px solid #ccc;
+      }
     }
-    .body-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
+  }
+
+  .body-header {
+    h2 {
+      span.active {
+        color: #32db64;
+      }
     }
-    .view-date-by {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 0;
+  }
+
+  .slide-area {
+    float: left;
+    width: 250px;
+    display: flex;
+    align-items: center;
+  }
+
+  .slide-span {
+    float: left;
+    width: 250px;
+  }
+
+  .calander-date {
+    font-size: 14px;
+    color: #000000;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto auto 10px;
+    border: 1px solid #ccc;
+  }
+
+  .open-acts {
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+
+    .acts {
+      color: #fff;
     }
-    .view-date-by span {
-        color: #606060;
+
+    .more-acts {
+      position: absolute;
+      bottom: 0;
+      background: white;
+      left: 0;
+      right: 0;
+      cursor: pointer;
     }
-    .body-header h2 {
-        margin: 0;
+
+    .user {
+      height: 20px;
+      overflow: hidden;
     }
-    .buttons {
-        width: 25%;
-        text-align: center;
+  }
+
+  .acts-popup {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100vh;
+  }
+
+  .popup-bg {
+    width: 35%;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  }
+
+  .edit-tool {
+    float: right;
+    width: 11%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .open-acts .acts:nth-child(1) {
+    background: #607d8b;
+  }
+
+  .open-acts .acts:nth-child(2) {
+    background: #ff80ab;
+  }
+
+  .open-acts .acts:nth-child(3) {
+    background: #ea80fc;
+  }
+
+  .open-acts .acts:nth-child(4) {
+    background: #3f51b5;
+  }
+
+  .open-acts .acts:nth-child(5) {
+    background: #3f51b5;
+  }
+
+  .view-popup {
+    margin-top: 15px;
+  }
+
+  .meet-head h5 {
+    margin-bottom: 15px;
+
+    span {
+      display: inherit;
+      font-size: 15px;
+      font-weight: normal;
+      margin-top: 6px;
     }
-    .user-dashboard tbody tr td:first-child {
-        width: 80px;
-        border-right: 1px solid #ccc;
-        font-size: 11px;
-        position: relative;
-    }
-    .user-dashboard tbody tr td {
-        border-top: none;
-    }
-    .user-dashboard tbody tr td:last-child {
+  }
+
+  .meeting-nav {
+    height: 160px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+
+    ul {
+      padding-left: 15px;
+      margin: 0;
+
+      li {
+        list-style: decimal;
+        margin-bottom: 15px;
         border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .view-details {
+          float: right;
+          color: #488aff;
+        }
+      }
     }
-    .user-dashboard tbody tr td:first-child span {
-        position: absolute;
-        bottom: -7px;
-        width: 56px;
-        right: 16px;
-        text-align: right;
-    }
-    .user-dashboard tbody tr td:first-child:after {
-        content: '';
-        position: absolute;
-        height: 1px;
-        width: 12px;
-        background: #ccc;
-        right: 0;
-        bottom: -1px;
-    }
-    }
-    
+  }
+
+}

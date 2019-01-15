@@ -5,22 +5,78 @@
 <ion-content padding>
   <comp-sidebar></comp-sidebar>
   <div class="right-body" *ngIf=sidebar?.comp?.dashboard>
+    <div class="body-header">
+      <h2>Timesheet Reports </h2>
+      <div class="buttons">
+        <div class="view-date-by">
+          <button ion-button type="cancle" (click)=report.lastMonth() small color="light"><ion-icon name="arrow-back"></ion-icon></button>
+          <span>{{report.month}}</span>
+          <button ion-button type="cancle" (click)=report.nextMonth() small color="light"><ion-icon name="arrow-forward"></ion-icon></button>
+        </div>
+      </div>
+    </div>
     <div class='table-responsive'>
-    <table width=100%  cellspacing=0>
+    <table width=100% cellspacign=0 class="table calander">
       <tr>
         <td *ngFor="let i of ['SUN','MON','TUE','WED','THU','FRI','SAT']">
           {{i}}
         </td>
       </tr>
       <tr *ngFor="let week of cal">
-        <td *ngFor="let d of week">
-          <div class=date>{{d.date}}</div>
-          <div class=acts *ngFor='let a of d.acts'>
-            <div class=user>{{a.time}}[{{a.user}}]:{{a.title}}</div>
-          </div>        
+        <td *ngFor="let d of week"   (click)=openActsPopup(d)>
+          <div class=calander-date>{{d.date}}</div>
+            <div class="open-acts">
+                <div class=acts *ngFor='let a of d.acts'>
+                <div class=user [ngStyle]="{ 'background-color' : a.color}" >{{a.time}}[{{a.user}}]:{{a.title}}</div>
+            </div>
+            <div class="more-acts">1 more</div>
+          </div>
         </td>
       </tr>
     </table>
+    <div class="acts-popup" *ngIf=act?.popup>
+        <div class="popup-bg">
+
+          <div class="list-meeting">
+            <div class="meeting-nav">
+              
+              <ul >
+                <li *ngFor="let e of act.reports.acts"  (click)=OpenActivity(e) [ngStyle]="{ 'color' : e.color}"><span>{{e.time}} </span><span>{{e.title}}</span>
+                  <div class="view-details">View Details</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="add-user-btn">
+            <button ion-button small color=light (click)=closeActPopup()>Close</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="acts-popup" *ngIf=act?.descr>
+          <div class="popup-bg">
+  
+            <div class="view-popup">
+              <div class="edit-tool">
+                
+              </div>
+              <div class="meet-head">
+                <h5>{{act.details.title}}
+                  <span>{{act.details.time}}</span>
+                </h5>
+              </div>
+              <div class="meet-desc">
+                <p>{{act.details.descr}}</p>
+              </div>
+            </div>
+  
+            <div class="add-user-btn">
+              <button ion-button small color=light (click)=closeActDescr()>Close</button>
+            </div>
+  
+          </div>
+        </div>
   </div>
   </div>
   <div class="right-body" *ngIf=sidebar?.comp?.users>
@@ -51,6 +107,7 @@
           </tr>
         </tbody>
       </table>
+      
       <div class=pagination>
         <span *ngFor='let i of sidebar.data.pages'>
           <button ion-button (click)=sidebar.AdminUserList(i-1)>{{i}}</button>
@@ -84,6 +141,10 @@
               <ion-label floating>Confirm Password</ion-label>
               <ion-input type="password" [(ngModel)]=newUser.cnfpass name="confirmpassword" required></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-label >Select Color</ion-label>
+              <ion-input type="color" [(ngModel)]="newUser.color" name=color></ion-input>
+            </ion-item>
             <div style="color: red; padding-top: 0.2rem">
               {{frmError.cnfpass}}
             </div>
@@ -115,6 +176,10 @@
               <ion-input type="text" [(ngModel)]=newUser.designation name="designation" required></ion-input>
             </ion-item>
           </ion-list>
+          <ion-item>
+              <ion-label >Select Color</ion-label>
+              <ion-input type="color" [(ngModel)]="newUser.color" name=color></ion-input>
+            </ion-item>
           <div class="add-user-btn">
             <button ion-button type="submit" small>Update User Info</button>
           </div>
@@ -209,9 +274,6 @@
     <div class="body-header">
       <h2>{{report.Name}}</h2>
       <div class="buttons">
-        <button ion-button type="cancle" (click)=report.changeReportType(1) small>Daily</button>
-        <button ion-button type="cancle" (click)=report.changeReportType(2) small color="secondary">Weekly</button>
-        <button ion-button type="cancle" (click)=report.changeReportType(3) small>Monthly</button>
         <div class="view-date-by">
           <button ion-button type="cancle" (click)=report.back() small color="light">
             <ion-icon name="arrow-back"></ion-icon>
@@ -232,7 +294,7 @@
           </thead>
           <tbody (click)=report.showAddActivityForm()>
             <tr *ngFor="let rep of report.userReport">
-              <td>
+              <td>{{rep.date}} {{rep.time}}
                 {{rep.activity}}
               </td>
               <td>
