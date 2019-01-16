@@ -1,17 +1,23 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+    <div class="form-container">
+        <div class="form-center">
+          <h3>Change Password</h3>
+          <form (ngSubmit)=changePasswd()>
+            <ion-list>
+              <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input type="password" [(ngModel)]=newUser.passwd name="passwd"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Confirm Password</ion-label>
+                <ion-input type="password" [(ngModel)]=newUser.cnfpass name="cnfpass"></ion-input>
+              </ion-item>
+            </ion-list>
+            <div class="add-user-btn">
+              <button ion-button (click)=hideForms() small color="light">Cancle</button>
+              <button ion-button type="submit" small>Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
 </ion-content>

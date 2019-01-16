@@ -75,9 +75,6 @@ export class HomePage {
     this.cal.push(week);
     week=[];
   }
-  
-  //console.log(date.getMonth()==month);
-  //console.log(this.cal);
   this.sidebar.comp.dashboard=true;
   }
   errorReset(){
@@ -233,6 +230,7 @@ export class HomePage {
   }
   OpenActivity(e){
     this.act.details=e;
+    console.log(e);
     this.act.descr=true;
     this.closeActPopup();
     console.log(e);

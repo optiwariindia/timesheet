@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../../pages/login/login';
+import { ContactPage } from '../../pages/contact/contact';
 
 /**
  * Generated class for the CompHeaderComponent component.
@@ -26,6 +27,11 @@ export class CompHeaderComponent {
     this.navCtrl.setRoot(LoginPage);
   }
   changePasswd(){
+    this.store.get("userinfo").then(resp=>{
+      if(resp!==null){
+        this.navCtrl.push(ContactPage,JSON.parse(resp));   
+      }
+    });
     
   }
   

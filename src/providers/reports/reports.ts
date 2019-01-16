@@ -26,7 +26,9 @@ export class ReportsProvider {
     remarks:"",
     module:"reports",
     action:"addActivity",
-    sesskey:""
+    sesskey:"",
+    time:"",
+    id:0
   };
   userReport:any;
   report:any;
@@ -106,6 +108,7 @@ export class ReportsProvider {
       this.report=r.reports;
       console.log(r);
       this.usersList=r.usersList;
+      if("id" in r.login)
       this.createUserReport(r.login.id);
     });
   }
@@ -142,5 +145,30 @@ export class ReportsProvider {
       }
     });
   }
-
+  editActivity(e){
+    this.form.addActivity=true;
+    this.activity.actDate=e.actDate;
+    this.activity.activity=e.activity;
+    this.activity.remarks=e.remarks;
+    this.activity.action="updateActivity";
+    this.activity.time=e.time;
+    this.activity.id=e.id;
+  }
+  cancleActivity(e){
+    this.form.addActivity=true;
+    this.activity.action="delete";
+    this.activity.id=e.id;
+    var apiresp=this.webapi.getData(this.activity);
+    apiresp.subscribe(resp=>{
+      var r=JSON.parse(JSON.stringify(resp));
+      if(r.status.result==false){
+        this.error="There is some issue. Please try latter";
+      }else{
+        this.activity.activity="";
+        this.activity.remarks="";
+        this.hideForms();
+        this.getReport();
+      }
+    });
+  }
 }

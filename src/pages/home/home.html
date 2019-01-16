@@ -9,9 +9,9 @@
       <h2>Timesheet Reports </h2>
       <div class="buttons">
         <div class="view-date-by">
-          <button ion-button type="cancle" (click)=report.lastMonth() small color="light"><ion-icon name="arrow-back"></ion-icon></button>
-          <span>{{report.month}}</span>
-          <button ion-button type="cancle" (click)=report.nextMonth() small color="light"><ion-icon name="arrow-forward"></ion-icon></button>
+          <!-- <button ion-button type="cancle" (click)=report.lastMonth() small color="light"><ion-icon name="arrow-back"></ion-icon></button> -->
+          <h2>{{report.month}}</h2>
+          <!-- <button ion-button type="cancle" (click)=report.nextMonth() small color="light"><ion-icon name="arrow-forward"></ion-icon></button> -->
         </div>
       </div>
     </div>
@@ -27,9 +27,9 @@
           <div class=calander-date>{{d.date}}</div>
             <div class="open-acts">
                 <div class=acts *ngFor='let a of d.acts'>
-                <div class=user [ngStyle]="{ 'background-color' : a.color}" >{{a.time}}[{{a.user}}]:{{a.title}}</div>
+                <div class=user [ngStyle]="{ 'background-color' : a.color}" >{{a.time}}:{{a.title}}</div>
             </div>
-            <div class="more-acts">1 more</div>
+            <div class="more-acts" *ngIf="d.acts?.length>3" >+ {{d.acts?.length - 3}} More</div>
           </div>
         </td>
       </tr>
@@ -62,7 +62,7 @@
                 
               </div>
               <div class="meet-head">
-                <h5>{{act.details.title}}
+                <h5 [ngStyle]="{ 'color' : act.details.color}">{{act.details.title}}
                   <span>{{act.details.time}}</span>
                 </h5>
               </div>
@@ -270,52 +270,47 @@
       </table>
     </div>
   </div>
+ 
   <div class=right-body *ngIf=sidebar?.comp?.timesheet>
-    <div class="body-header">
-      <h2>{{report.Name}}</h2>
-      <div class="buttons">
-        <div class="view-date-by">
-          <button ion-button type="cancle" (click)=report.back() small color="light">
-            <ion-icon name="arrow-back"></ion-icon>
-          </button>
-          <span>{{report.Date | date: "dd"}} <span>{{report.Date | date: "MMMM"}}</span> {{report.Date | date: "yyyy"}}</span>
-          <button ion-button type="cancle" (click)=report.next() small color="light">
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
+      <div class="body-header">
+        <h2>{{report.Name}}</h2>
+        <div class="buttons">
+          <div class="view-date-by">
+            <button ion-button type="cancle" (click)=report.back() small color="light">
+              <ion-icon name="arrow-back"></ion-icon>
+            </button>
+            <span>{{report.Date | date: "dd"}} <span>{{report.Date | date: "MMMM"}}</span> {{report.Date | date: "yyyy"}}</span>
+            <button ion-button type="cancle" (click)=report.next() small color="light">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+          </div>
         </div>
       </div>
+      <div class="table-responsive">
+          <table class="table dash">
+            <tbody >
+              <tr *ngFor="let rep of report.userReport">
+                <td>{{rep.time}}</td>
+                <td>{{rep.activity}}</td>
+                <td>{{rep.remarks}}</td>
+                <td><button (click)=report.editActivity(rep) ion-button small>Edit</button></td>
+                <td><button (click)=report.cancleActivity(rep) ion-button small>Delete</button></td>
+              </tr>
+              <tr>
+                <td colspan=5 (click)=report.showAddActivityForm()><button ion-button >Click here to add Activity</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table user-dashboard">
-          <thead>
-            <tr>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody (click)=report.showAddActivityForm()>
-            <tr *ngFor="let rep of report.userReport">
-              <td>{{rep.date}} {{rep.time}}
-                {{rep.activity}}
-              </td>
-              <td>
-                {{rep.remarks}}
-              </td>
-            </tr>
-            <tr>
-              <td colspan=2>Click here to add Activity</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  </div>
-  <div class="change-password-popup" *ngIf=report?.form?.addActivity>
+   <div class="change-password-popup" *ngIf=report?.form?.addActivity>
     <div class="form-container">
       <div class="form-center">
         <h3>Add an activity</h3>
         <form (ngSubmit)=report.addActivity()>
           <ion-list>
           <ion-item>
-            <ion-label floating>Time</ion-label>
+            <ion-label >Time</ion-label>
             <ion-input type="time" [(ngModel)]=report.activity.time name=time></ion-input>
           </ion-item>
             <ion-item >
