@@ -1,7 +1,7 @@
 <ion-content>
     <div class="form-container">
         <div class="form-center">
-          <h3>Change Password</h3>
+          <h3>Change My Password</h3>
           <form (ngSubmit)=changePasswd()>
             <ion-list>
               <ion-item>
@@ -14,10 +14,11 @@
               </ion-item>
             </ion-list>
             <div class="add-user-btn">
-              <button ion-button (click)=hideForms() small color="light">Cancle</button>
+              
               <button ion-button type="submit" small>Save Changes</button>
             </div>
           </form>
         </div>
       </div>
+      <div *ngIf="error?.show">{{error.msg}}</div>
 </ion-content>

@@ -3,46 +3,55 @@
 </ion-header>
 
 <ion-content padding>
+
   <comp-sidebar></comp-sidebar>
   <div class="right-body" *ngIf=sidebar?.comp?.dashboard>
     <div class="body-header">
       <h2>Timesheet Reports </h2>
       <div class="buttons">
         <div class="view-date-by">
-          <!-- <button ion-button type="cancle" (click)=report.lastMonth() small color="light"><ion-icon name="arrow-back"></ion-icon></button> -->
-          <h2>{{report.month}}</h2>
-          <!-- <button ion-button type="cancle" (click)=report.nextMonth() small color="light"><ion-icon name="arrow-forward"></ion-icon></button> -->
+          <button ion-button type="cancle" (click)=report.lastMonth() small color="light">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <h2 (click)=report.changeRepMonthFormShow()>{{report.month}}</h2>
+          <button ion-button type="cancle" (click)=report.nextMonth() small color="light">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
         </div>
       </div>
     </div>
-    <div class='table-responsive'>
-    <table width=100% cellspacign=0 class="table calander">
-      <tr>
-        <td *ngFor="let i of ['SUN','MON','TUE','WED','THU','FRI','SAT']">
-          {{i}}
-        </td>
-      </tr>
-      <tr *ngFor="let week of cal">
-        <td *ngFor="let d of week"   (click)=openActsPopup(d)>
-          <div class=calander-date>{{d.date}}</div>
+    <div class=largeLoader *ngIf=report?.showLoader>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div class='table-responsive' *ngIf="!report?.showLoader">
+      <table width=100% cellspacign=0 class="table calander">
+        <tr>
+          <td *ngFor="let i of ['SUN','MON','TUE','WED','THU','FRI','SAT']">
+            {{i}}
+          </td>
+        </tr>
+        <tr *ngFor="let week of cal">
+          <td *ngFor="let d of week" (click)=openActsPopup(d)>
+            <div class=calander-date>{{d.date}}</div>
             <div class="open-acts">
-                <div class=acts *ngFor='let a of d.acts'>
-                <div class=user [ngStyle]="{ 'background-color' : a.color}" >{{a.time}}:{{a.title}}</div>
+              <div class=acts *ngFor='let a of d.acts'>
+                <div class=user [ngStyle]="{ 'background-color' : a.color}">{{a.user}} ({{a.act}})</div>
+              </div>
+              <div class="more-acts" *ngIf="d.acts?.length>3">+ {{d.acts?.length - 3}} More</div>
             </div>
-            <div class="more-acts" *ngIf="d.acts?.length>3" >+ {{d.acts?.length - 3}} More</div>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <div class="acts-popup" *ngIf=act?.popup>
+          </td>
+        </tr>
+      </table>
+      <div class="acts-popup" *ngIf=act?.popup>
         <div class="popup-bg">
 
           <div class="list-meeting">
             <div class="meeting-nav">
-              
-              <ul >
-                <li *ngFor="let e of act.reports.acts"  (click)=OpenActivity(e) [ngStyle]="{ 'color' : e.color}"><span>{{e.time}} </span><span>{{e.title}}</span>
-                  <div class="view-details">View Details</div>
+
+              <ul>
+                <li *ngFor="let e of act.reports.acts" (click)=openActList(e) [ngStyle]="{ 'color' : e.color}"><span>{{e.user}}
+                  </span><span>({{e.act}} Activities)</span>
+                  <div class="view-details">Open</div>
                 </li>
               </ul>
             </div>
@@ -53,31 +62,48 @@
 
         </div>
       </div>
+      <div class="acts-popup" *ngIf=this?.act?.showacts>
+        <div class="popup-bg">
 
-      <div class="acts-popup" *ngIf=act?.descr>
-          <div class="popup-bg">
-  
-            <div class="view-popup">
-              <div class="edit-tool">
-                
-              </div>
-              <div class="meet-head">
-                <h5 [ngStyle]="{ 'color' : act.details.color}">{{act.details.title}}
-                  <span>{{act.details.time}}</span>
-                </h5>
-              </div>
-              <div class="meet-desc">
-                <p>{{act.details.descr}}</p>
-              </div>
+          <div class="list-meeting">
+            <div class="meeting-nav">
+
+              <ul>
+                <li *ngFor="let e of act.repdescr" (click)=OpenActivity(e) [ngStyle]="{ 'color' : e.color}"><span>{{e.time}}:-
+                  </span><span>{{e.activity}}</span>
+                  <div class="view-details">Details</div>
+                </li>
+              </ul>
             </div>
-  
-            <div class="add-user-btn">
-              <button ion-button small color=light (click)=closeActDescr()>Close</button>
-            </div>
-  
           </div>
         </div>
-  </div>
+      </div>
+      <!--  -->
+      <div class="acts-popup" *ngIf=act?.descr>
+        <div class="popup-bg">
+
+          <div class="view-popup">
+            <div class="edit-tool">
+
+            </div>
+            <div class="meet-head">
+              <h5 [ngStyle]="{ 'color' : act.details.color}">{{act.details.user}}
+                <span>{{act.details.time}}</span>
+              </h5>
+            </div>
+            <div class="meet-desc">
+              <h2>{{act.details.activity}}</h2>
+              <p>{{act.details.remarks}}</p>
+            </div>
+          </div>
+
+          <div class="add-user-btn">
+            <button ion-button small color=light (click)=closeActDescr()>Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
   <div class="right-body" *ngIf=sidebar?.comp?.users>
     <h2>Users</h2>
@@ -107,7 +133,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <div class=pagination>
         <span *ngFor='let i of sidebar.data.pages'>
           <button ion-button (click)=sidebar.AdminUserList(i-1)>{{i}}</button>
@@ -142,7 +168,7 @@
               <ion-input type="password" [(ngModel)]=newUser.cnfpass name="confirmpassword" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label >Select Color</ion-label>
+              <ion-label>Select Color</ion-label>
               <ion-input type="color" [(ngModel)]="newUser.color" name=color></ion-input>
             </ion-item>
             <div style="color: red; padding-top: 0.2rem">
@@ -177,9 +203,9 @@
             </ion-item>
           </ion-list>
           <ion-item>
-              <ion-label >Select Color</ion-label>
-              <ion-input type="color" [(ngModel)]="newUser.color" name=color></ion-input>
-            </ion-item>
+            <ion-label>Select Color</ion-label>
+            <ion-input type="color" [(ngModel)]="newUser.color" name=color></ion-input>
+          </ion-item>
           <div class="add-user-btn">
             <button ion-button type="submit" small>Update User Info</button>
           </div>
@@ -187,7 +213,6 @@
       </div>
     </div>
   </div>
-
   <div *ngIf=sidebar?.comp?.loader>
     <div class=loader>
       <ion-spinner></ion-spinner>
@@ -222,7 +247,7 @@
     <div class="form-container">
       <div class="form-center">
         <h3>{{form.heading[0]}}</h3>
-        <div >{{form.heading[1]}}</div>
+        <div>{{form.heading[1]}}</div>
         <div class="add-user-btn">
           <button ion-button (click)=hideForms() small color="light">No</button>
           <button ion-button type="submit" (click)=blockUser(target) small>Yes</button>
@@ -235,13 +260,14 @@
     <div class="body-header">
       <h2>Timesheet Reports ({{report.Name}})</h2>
       <div class="buttons">
-        <button ion-button type="cancle" (click)=report.changeReportType(1) small>Daily</button>
-        <button ion-button type="cancle" (click)=report.changeReportType(2) small color="secondary">Weekly</button>
-        <button ion-button type="cancle" (click)=report.changeReportType(3)  small>Monthly</button>
         <div class="view-date-by">
-          <button ion-button type="cancle" (click)=report.back() small color="light"><ion-icon name="arrow-back"></ion-icon></button>
+          <button ion-button type="cancle" (click)=report.back() small color="light">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
           <span>{{report.Date}}</span>
-          <button ion-button type="cancle" (click)=report.next() small color="light"><ion-icon name="arrow-forward"></ion-icon></button>
+          <button ion-button type="cancle" (click)=report.next() small color="light">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
         </div>
       </div>
     </div>
@@ -257,63 +283,66 @@
           <tr *ngFor="let i of sidebar.data.users">
             <td><strong>{{i.name}}</strong></td>
             <td>
-              <table><tr *ngFor="let act of i.acts">
-                <td>{{act.start}}</td>
-                <td>{{act.end}}</td>
-                <td>{{act.activity}}</td>
-                <td>{{act.remarks}}</td>
-                <td>{{act.udpated_on}}</td>
-              </tr></table>
+              <table>
+                <tr *ngFor="let act of i.acts">
+                  <td>{{act.start}}</td>
+                  <td>{{act.end}}</td>
+                  <td>{{act.activity}}</td>
+                  <td>{{act.remarks}}</td>
+                  <td>{{act.udpated_on}}</td>
+                </tr>
+              </table>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
- 
+
   <div class=right-body *ngIf=sidebar?.comp?.timesheet>
-      <div class="body-header">
-        <h2>{{report.Name}}</h2>
-        <div class="buttons">
-          <div class="view-date-by">
-            <button ion-button type="cancle" (click)=report.back() small color="light">
-              <ion-icon name="arrow-back"></ion-icon>
-            </button>
-            <span>{{report.Date | date: "dd"}} <span>{{report.Date | date: "MMMM"}}</span> {{report.Date | date: "yyyy"}}</span>
-            <button ion-button type="cancle" (click)=report.next() small color="light">
-              <ion-icon name="arrow-forward"></ion-icon>
-            </button>
-          </div>
+    <div class="body-header">
+      <h2>{{report.Name}}</h2>
+      <div class="buttons">
+        <div class="view-date-by">
+          <button ion-button type="cancle" (click)=report.back() small color="light">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <div (click)=report.changeDateFormShow()><span>{{report.Date | date: "dd"}} <span>{{report.Date | date:
+                "MMMM"}}</span> {{report.Date | date: "yyyy"}}</span></div>
+          <button ion-button type="cancle" (click)=report.next() small color="light">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
         </div>
       </div>
-      <div class="table-responsive">
-          <table class="table dash">
-            <tbody >
-              <tr *ngFor="let rep of report.userReport">
-                <td>{{rep.time}}</td>
-                <td>{{rep.activity}}</td>
-                <td>{{rep.remarks}}</td>
-                <td><button (click)=report.editActivity(rep) ion-button small>Edit</button></td>
-                <td><button (click)=report.cancleActivity(rep) ion-button small>Delete</button></td>
-              </tr>
-              <tr>
-                <td colspan=5 (click)=report.showAddActivityForm()><button ion-button >Click here to add Activity</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
     </div>
-   <div class="change-password-popup" *ngIf=report?.form?.addActivity>
+    <div class="table-responsive">
+      <table class="table dash">
+        <tbody>
+          <tr *ngFor="let rep of report.userReport">
+            <td>{{rep.time}}</td>
+            <td>{{rep.activity}}</td>
+            <td>{{rep.remarks}}</td>
+            <td><button (click)=report.editActivity(rep) ion-button small>Edit</button></td>
+            <td><button (click)=report.cancleActivity(rep) ion-button small>Delete</button></td>
+          </tr>
+          <tr>
+            <td colspan=5 (click)=report.showAddActivityForm()><button ion-button>Click here to add Activity</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="change-password-popup" *ngIf=report?.form?.addActivity>
     <div class="form-container">
       <div class="form-center">
-        <h3>Add an activity</h3>
+        <h3>Add/Update an activity</h3>
         <form (ngSubmit)=report.addActivity()>
           <ion-list>
-          <ion-item>
-            <ion-label >Time</ion-label>
-            <ion-input type="time" [(ngModel)]=report.activity.time name=time></ion-input>
-          </ion-item>
-            <ion-item >
+            <ion-item>
+              <ion-label>Time</ion-label>
+              <ion-input type="time" [(ngModel)]=report.activity.time name=time></ion-input>
+            </ion-item>
+            <ion-item>
               <ion-label floating>Activity Title</ion-label>
               <ion-input name=activity [(ngModel)]="report.activity.activity"></ion-input>
             </ion-item>
@@ -331,4 +360,72 @@
       </div>
     </div>
   </div>
-  </ion-content>
+
+  <div class="acts-popup" *ngIf=report?.changeMonth>
+    <div class="popup-bg">
+      <div class="calender-popup">
+        <div class="calender-head">
+          <button ion-button color="light" (click)=report.lastYear() small>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <div class="calender-name">{{report.repYear}}</div>
+          <button ion-button color="light" (click)=report.nextYear() small>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </div>
+        <div class="month-view">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(1,report.repYear)>JAN {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(2,report.repYear)>FEB {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(3,report.repYear)>MAR {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(4,report.repYear)>APR {{report.repYear}}</div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(5,report.repYear)>MAY {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(6,report.repYear)>JUN {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(7,report.repYear)>JUL {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(8,report.repYear)>AUG {{report.repYear}}</div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(9,report.repYear)>SEP {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(10,report.repYear)>OCT {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(11,report.repYear)>NOV {{report.repYear}}</div>
+              </ion-col>
+              <ion-col>
+                <div class="month-name" (click)=report.changeRepMonth(12,report.repYear)>DEC {{report.repYear}}</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acts-popup" *ngIf=report?.changeDate>
+    <div class="popup-bg">
+      <ion-calendar (onDaySelect)="selectDate($event)"></ion-calendar>
+    </div>
+  </div>
+</ion-content>

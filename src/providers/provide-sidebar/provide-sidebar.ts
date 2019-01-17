@@ -18,7 +18,7 @@ export class ProvideSidebarProvider {
     sidebarBtns:{}
   };
   data:any;
-  comp:any={
+  comp={
     users:false,
     loader:false,
     reports:false,
@@ -33,16 +33,23 @@ export class ProvideSidebarProvider {
       updateUser:false,
       changePasswd:false,
       chageUserInfo:false
-    }
-  }
+    },
+    timesheet:false
+  };
   constructor(public store:Storage,public webapi:WebapiProvider,public report:ReportsProvider) {
+    this.resetUserInfo();
+  }
+  resetUserInfo(){
     this.store.get("userinfo").then(resp=>{
-      var r=JSON.parse(resp);
-      this.userinfo.id=r.id;
-      this.userinfo.name=r.name;
-      this.userinfo.role=r.role;
-      this.userinfo.sesskey=r.sesskey;
-      this.showAdminMenu();
+      if(resp!==null){
+        var r=JSON.parse(resp);
+        console.log(r);
+        this.userinfo.id=r.id;
+        this.userinfo.name=r.name;
+        this.userinfo.role=r.role;
+        this.userinfo.sesskey=r.sesskey;
+        this.showAdminMenu();
+      }
     });
   }
   resetAll(){
@@ -50,6 +57,7 @@ export class ProvideSidebarProvider {
       users:false,
       loader:false,
       reports:false,
+      dashboard:false,
       report:{
         daily:false,
         weekly:false,
@@ -60,12 +68,15 @@ export class ProvideSidebarProvider {
         updateUser:false,
         changePasswd:false,
         chageUserInfo:false
-      }
-    } 
+      },
+      timesheet:false
+    }; 
   }
   showAdminMenu(){
     if(this.userinfo.role==1){
       this.userinfo.sidebarBtns.user={addbtn:false,disp:true};
+    }else{
+      this.userinfo.sidebarBtns.user={addbtn:false,disp:false};
     }
     this.userinfo.sidebarBtns.report={disp:true,daily:false,weekly:false,monthly:false};
     this.userinfo.sidebarBtns.timesheet={disp:true,others:false}
@@ -85,6 +96,7 @@ export class ProvideSidebarProvider {
       this.comp.users=true;
       this.userinfo.sidebarBtns.user.addbtn=true;
       this.comp.loader=false;
+      this.resetUserInfo();
     });
     
   }

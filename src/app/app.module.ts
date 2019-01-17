@@ -19,7 +19,7 @@ import { CompHeaderComponent } from '../components/comp-header/comp-header';
 import { CompSidebarComponent } from '../components/comp-sidebar/comp-sidebar';
 import { ProvideSidebarProvider } from '../providers/provide-sidebar/provide-sidebar';
 import { ReportsProvider } from '../providers/reports/reports';
-
+import { CalendarModule } from "ionic3-calendar-en";
 
 @NgModule({
   declarations: [
@@ -30,16 +30,17 @@ import { ReportsProvider } from '../providers/reports/reports';
     SplashPage,
     LoginPage,
     CompHeaderComponent,
-    CompSidebarComponent
+    CompSidebarComponent    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp), 
+    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'timesheet',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    CalendarModule  
   ],
   bootstrap: [IonicApp],
   entryComponents: [

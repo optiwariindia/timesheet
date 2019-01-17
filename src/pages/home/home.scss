@@ -4,6 +4,7 @@ page-home {
       float: right;
       padding: 0 15px;
     }
+    
   
     .table>thead>tr>th {
       border-bottom: none;
@@ -381,5 +382,22 @@ page-home {
       border: none;
       padding: 10px 0;
   }
+  .calender-head {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    .calender-name {
+        font-size: 20px;
+        color: #606060;
+    }
+}
+.month-name {
+    text-align: center;
+    background: #ddd;
+    padding: 10px 0;
+}
   }
   

@@ -4,12 +4,14 @@ import { ProvideSidebarProvider } from '../../providers/provide-sidebar/provide-
 import { WebapiProvider } from '../../providers/webapi/webapi';
 import { ReportsProvider } from '../../providers/reports/reports';
 import { Storage } from '@ionic/storage';
+//import { CalendarModule } from "ionic3-calendar-en";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  section="home";
   newUser={
     loginid:"",
     name:"",
@@ -25,8 +27,10 @@ export class HomePage {
     popup:false,
     descr:false,
     edit:false,
+    showacts:false,
     reports:[],
-    details:[]
+    details:[],
+    repdescr:[]
   }
   sesskey="";
   cal:any;
@@ -41,18 +45,38 @@ export class HomePage {
   };
   target:any;
   constructor(public navCtrl: NavController,public store:Storage,public sidebar:ProvideSidebarProvider,public webapi:WebapiProvider,public report:ReportsProvider) {
-    var d=new Date(this.report.Date);
     this.store.get("userinfo").then(resp=>{
       var r=JSON.parse(resp);
       this.sesskey=r.sesskey;
-      this.createCal({month:d.getMonth()+1,year:d.getFullYear()});
-    });    
+      this.createCal();
+      setInterval(() => {
+        if("sidebar" in this){
+          if(this.sidebar.comp.dashboard){
+            this.createCal();
+          } 
+        }},10000);
+    });
+    
   }
-  createCal({month,year}){
+  selectDate(e){
+    var d=new Date(this.report.Date);
+    d.setDate(e.date);
+    d.setMonth(e.month);
+    d.setFullYear(e.year);
+    this.report.Date=d;
+    this.report.changeDate=false;
+    this.report.getReport();
+  }
+  createCal(){
+    this.sidebar.resetUserInfo();
+    var d=new Date(this.report.Date);
+    this.report.showLoader=false;
+    this.report.display=true;
+    var month=d.getMonth()+1;
+    var year=d.getFullYear();
     this.cal=[];
     var week=[];
     var date=new Date(year+"-"+month+"-1");
-    console.log(date);
     var startd=date.getDay();
     for(var i=0;i<startd;i++){
       week.push("");
@@ -62,13 +86,13 @@ export class HomePage {
     for(var j=0;j<5;j++){
     for(i=week.length;i<7;i++){
       acts=[];
-      date.setDate(date.getDate()+1);
       week.push({date:date.getDate(),month:date.getMonth(),year:date.getFullYear(),acts:acts});
-      var apidata=this.webapi.getData({module:'reports',action:'getRep',sesskey:this.sesskey,date:date,i:i,j:j});
+      var apidata=this.webapi.getData({module:'reports',action:'getRepSummary',sesskey:this.sesskey,date:date,i:i,j:j});
+      date.setDate(date.getDate()+1);
       apidata.subscribe(r=>{
         var resp=JSON.parse(JSON.stringify(r));
         for(var k=0;k<resp.rep.length;k++){
-          this.cal[resp.request.j][resp.request.i].acts.push({color:resp.rep[k].color,user:resp.rep[k].user,time:resp.rep[k].time,title:resp.rep[k].activity,descr:resp.rep[k].remarks});
+          this.cal[resp.request.j][resp.request.i].acts.push({date:resp.date,color:resp.rep[k].color,user:resp.rep[k].user,act:resp.rep[k].act});
         }
       });
     }
@@ -97,6 +121,7 @@ export class HomePage {
   }
   createUser(){
     this.newUser.sesskey=this.sidebar.userinfo.sesskey;
+    this.sidebar.resetUserInfo();
     this.errorReset();
     if(this.newUser.passwd!=this.newUser.cnfpass){
       this.frmError.cnfpass="Your password is not matching";
@@ -118,6 +143,7 @@ export class HomePage {
     }
   }
   changePasswd(){
+    this.sidebar.resetUserInfo();
     this.newUser.sesskey=this.sidebar.userinfo.sesskey;
     this.errorReset();
     if(this.newUser.passwd!=this.newUser.cnfpass){
@@ -169,6 +195,7 @@ export class HomePage {
     this.newUser.action="updateUserInfo";
   }
   changeDetails(){
+    this.sidebar.resetUserInfo();
     this.newUser.sesskey=this.sidebar.userinfo.sesskey;
     var apiresp=this.webapi.getData(this.newUser);
       apiresp.subscribe(r=>{
@@ -214,6 +241,7 @@ export class HomePage {
   changeRole(i){
     var usr={loginid:i.loginid,module:"users",action:"changeRole",role:i.role,sesskey:this.sidebar.userinfo.sesskey};
     //Updating role
+    this.sidebar.resetUserInfo();
     usr.role=(usr.role==1)?2:1;
     var r=this.webapi.getData(usr);
     r.subscribe(resp=>{
@@ -226,14 +254,24 @@ export class HomePage {
   openActsPopup(e){
     this.act.popup=true;
     this.act.reports=e;
-    console.log(this.act);
+    console.log(e);
+  }
+  openActList(e){
+    var webresp=this.webapi.getData({sesskey:this.sesskey,loginid:e.user,date:e.date,action:"getActs",module:"reports"});
+    webresp.subscribe(r=>{
+      var resp=JSON.parse(JSON.stringify(r));
+      this.act.popup=false;
+      this.act.showacts=true;
+      this.act.repdescr=resp.rep;
+      console.log(r);
+    });
   }
   OpenActivity(e){
     this.act.details=e;
     console.log(e);
     this.act.descr=true;
+    this.act.showacts=false;
     this.closeActPopup();
-    console.log(e);
   }
   closeActDescr(){
     this.act.descr=false;
