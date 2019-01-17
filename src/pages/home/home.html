@@ -2,7 +2,7 @@
   <comp-header></comp-header>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <comp-sidebar></comp-sidebar>
   <div class="right-body" *ngIf=sidebar?.comp?.dashboard>
@@ -321,7 +321,7 @@
           <tr *ngFor="let rep of report.userReport">
             <td>{{rep.time}}</td>
             <td>{{rep.activity}}</td>
-            <td>{{rep.remarks}}</td>
+            <td><span>{{rep.remarks}}</span></td>
             <td><button (click)=report.editActivity(rep) ion-button small>Edit</button></td>
             <td><button (click)=report.cancleActivity(rep) ion-button small>Delete</button></td>
           </tr>

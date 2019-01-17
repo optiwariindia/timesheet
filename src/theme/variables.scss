@@ -87,7 +87,7 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
-.label{text-align: initial;}
+.label{text-align: initial; font-size: 100%;}
 .loader {
     position: fixed;
     top: 0;

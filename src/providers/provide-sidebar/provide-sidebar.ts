@@ -74,7 +74,7 @@ export class ProvideSidebarProvider {
   }
   showAdminMenu(){
     if(this.userinfo.role==1){
-      this.userinfo.sidebarBtns.user={addbtn:false,disp:true};
+      this.userinfo.sidebarBtns.user={addbtn:true,disp:true};
     }else{
       this.userinfo.sidebarBtns.user={addbtn:false,disp:false};
     }

@@ -18,7 +18,7 @@ export class HomePage {
     designation:"",
     passwd:"",
     cnfpass:"",
-    color:"#ffffff",
+    color:"#000000",
     module:"users",
     action:"add",
     sesskey:""
